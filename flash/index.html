@@ -6,19 +6,25 @@
 <title>T-Dongle 燒錄</title>
 <script type="module" src="https://unpkg.com/esp-web-tools@10.1.0/dist/web/install-button.js?module"></script>
 <style>
-:root { --bg:#f6f7f9; --card:#fff; --fg:#1b1f24; --mute:#5c6670; --line:#dde2e7; --acc:#0b6bcb; --warn-bg:#fff6e0; --warn-fg:#6b4b00; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --warn-bg:#2d2512; --warn-fg:#f1d58a; } }
-:root[data-theme="dark"] { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --warn-bg:#2d2512; --warn-fg:#f1d58a; }
+:root { --bg:#f6f7f9; --card:#fff; --fg:#1b1f24; --mute:#5c6670; --line:#dde2e7; --acc:#0b6bcb; --dev:#8a3ffc; --warn-bg:#fff6e0; --warn-fg:#6b4b00; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --dev:#b48cff; --warn-bg:#2d2512; --warn-fg:#f1d58a; } }
+:root[data-theme="dark"] { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --dev:#b48cff; --warn-bg:#2d2512; --warn-fg:#f1d58a; }
 * { box-sizing:border-box; }
 body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft JhengHei","PingFang TC",sans-serif; }
-main { max-width:640px; margin:0 auto; padding:28px 16px 48px; }
-h1 { font-size:24px; margin:0 0 4px; }
+main { max-width:680px; margin:0 auto; padding:28px 16px 48px; }
+h1 { font-size:24px; margin:0 0 4px; } h2 { font-size:18px; margin:0 0 6px; }
 .sub { color:var(--mute); margin:0 0 20px; }
 .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 18px 14px; margin-bottom:14px; }
 ol { margin:0; padding-left:22px; } li { margin:6px 0; }
-.go { text-align:center; padding:22px 18px; }
-esp-web-install-button button[slot] { font:inherit; font-size:18px; padding:12px 28px; border:0; border-radius:10px; background:var(--acc); color:#fff; cursor:pointer; }
-.warn { background:var(--warn-bg); color:var(--warn-fg); border-radius:10px; padding:12px 14px; font-size:15px; }
+.pick { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+@media (max-width:560px) { .pick { grid-template-columns:1fr; } }
+.ed { display:flex; flex-direction:column; gap:10px; }
+.ed p { margin:0; color:var(--mute); font-size:15px; flex:1; }
+.ed button { font:inherit; font-size:17px; padding:11px 18px; border:0; border-radius:10px; color:#fff; cursor:pointer; width:100%; }
+.normal button { background:var(--acc); } .dev button { background:var(--dev); }
+.tag { display:inline-block; font-size:12px; padding:1px 8px; border-radius:99px; border:1px solid currentColor; margin-left:6px; vertical-align:2px; }
+.dev h2 { color:var(--dev); }
+.warn { background:var(--warn-bg); color:var(--warn-fg); border-radius:10px; padding:12px 14px; font-size:15px; margin-bottom:14px; }
 code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
 .mute { color:var(--mute); font-size:14px; }
 </style>
@@ -26,24 +32,46 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
 <body>
 <main>
   <h1>T-Dongle-S3 一鍵燒錄</h1>
-  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine5.7・不用裝 Arduino</p>
+  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine5.8・不用裝 Arduino</p>
 
   <div class="card">
     <ol>
       <li>用<b>電腦版 Chrome 或 Edge</b> 打開這一頁（手機、Safari、Firefox 不行）。</li>
       <li>先把 TF 卡拿出來。<b>按住 Dongle 上的按鈕，再插上電腦</b>，插好後放開。</li>
-      <li>按下面的「開始燒錄」→ 選跳出來的裝置（名稱通常有 <code>USB JTAG/serial</code> 或 <code>COM</code>）→「連線」。</li>
-      <li>選「安裝」。問要不要清除裝置時，第一次燒錄選<b>清除</b>。</li>
-      <li>等進度跑到 100%。<b>拔掉 Dongle</b>，插回 TF 卡，再插上電腦就會開始自動安裝。</li>
+      <li>在下面選一個版本按「燒錄」→ 選跳出來的裝置（通常有 <code>USB JTAG/serial</code> 或 <code>COM</code>）→「連線」→「安裝」。第一次燒錄問要不要清除，選<b>清除</b>。</li>
+      <li>跑到 100% 後<b>拔掉 Dongle</b>，插回 TF 卡，再插上電腦。</li>
     </ol>
   </div>
 
-  <div class="card go">
-    <esp-web-install-button manifest="manifest.json">
-      <button slot="activate">開始燒錄</button>
-      <span slot="unsupported">這個瀏覽器不支援燒錄，請改用電腦版 Chrome 或 Edge。</span>
-      <span slot="not-allowed">請用 https 網址打開這一頁。</span>
-    </esp-web-install-button>
+  <div class="pick">
+    <div class="card ed normal">
+      <h2>一般版</h2>
+      <p>插上就能用：整理 USB、找檔案、把 USB 的檔案拿出來／存回去。</p>
+      <esp-web-install-button manifest="manifest.json">
+        <button slot="activate">燒錄一般版</button>
+        <span slot="unsupported">請改用電腦版 Chrome 或 Edge。</span>
+        <span slot="not-allowed">請用 https 網址打開這一頁。</span>
+      </esp-web-install-button>
+    </div>
+    <div class="card ed dev">
+      <h2>開發版<span class="tag">開發者</span></h2>
+      <p>多了：AI 可以看這台電腦的磁碟、找檔案，把電腦的檔案或資料夾<b>複製或搬運</b>到 TF 卡（用說的就好）。</p>
+      <esp-web-install-button manifest="dev/manifest.json">
+        <button slot="activate">燒錄開發版</button>
+        <span slot="unsupported">請改用電腦版 Chrome 或 Edge。</span>
+        <span slot="not-allowed">請用 https 網址打開這一頁。</span>
+      </esp-web-install-button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>插上之後會怎樣</h2>
+    <ol>
+      <li>Dongle 先自己看 TF 卡（FAT32、exFAT 都可以）。</li>
+      <li><b>已經設定好</b>（卡上有 <code>AgentCenter\start.bat</code>）→ 直接開 <code>start.bat</code>，輸入 USB 密碼就能用。</li>
+      <li><b>空的卡</b> → 自動從網路下載安裝，小螢幕顯示進度。</li>
+      <li>按鈕：短按＝再啟動一次；<b>連按兩下＝檢查更新再啟動</b>；長按 3 秒＝開／關插上自動啟動。</li>
+    </ol>
   </div>
 
   <div class="warn">
@@ -51,7 +79,7 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
     選裝置時清單是空的：拔掉，確認<b>一直按住按鈕</b>再插一次。
   </div>
 
-  <p class="mute">韌體會從 <code>https://raw.githubusercontent.com/AEverhub/USB-AGENT/main/</code> 下載軟體到 TF 卡。這個韌體還沒有在實機上測過。</p>
+  <p class="mute">一般版從 <code>…/USB-AGENT/main/</code>、開發版從 <code>…/USB-AGENT/main/dev/</code> 下載軟體。開發版的電腦檔案存取：系統資料夾不能動；搬運一定先問你、確認內容一樣才刪原檔。韌體還沒有在實機上測過。</p>
 </main>
 </body>
 </html>
