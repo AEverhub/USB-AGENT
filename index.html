@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USB Agent</title>
+<style>
+:root { --bg:#f6f7f9; --card:#fff; --fg:#1b1f24; --mute:#5c6670; --line:#dde2e7; --acc:#0b6bcb; --dev:#8a3ffc; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --dev:#b48cff; } }
+:root[data-theme="dark"] { --bg:#111417; --card:#1a1f24; --fg:#e8ecef; --mute:#9aa5af; --line:#2c343b; --acc:#5aa9ff; --dev:#b48cff; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 system-ui,-apple-system,"Segoe UI","Microsoft JhengHei","PingFang TC",sans-serif; }
+main { max-width:640px; margin:0 auto; padding:32px 16px 48px; }
+h1 { font-size:26px; margin:0 0 4px; } h2 { font-size:18px; margin:0 0 4px; }
+.sub { color:var(--mute); margin:0 0 22px; }
+a.card { display:block; text-decoration:none; color:inherit; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+a.card:hover { border-color:var(--acc); }
+a.card p { margin:0; color:var(--mute); font-size:15px; }
+.dev h2 { color:var(--dev); }
+.mute { color:var(--mute); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>USB Agent</h1>
+  <p class="sub">Agent 中控中心 USB 版・<span id="ver">讀取版本中…</span></p>
+  <a class="card" href="flash/"><h2>燒錄 T-Dongle-S3 →</h2><p>用電腦版 Chrome／Edge，不用裝 Arduino。一般版、開發版都在這裡。</p></a>
+  <a class="card" id="dl" href="#"><h2>下載 USB 版（一般版）</h2><p>解壓縮後把 AgentCenter 資料夾複製到 USB 根目錄。</p></a>
+  <a class="card dev" id="dldev" href="#"><h2>下載 USB 版（開發版）</h2><p>多了：AI 可以複製、搬運這台電腦的檔案到 USB。</p></a>
+  <a class="card" href="join/"><h2>iPhone／iPad 加入聯機 →</h2><p>用 Safari 打開，輸入聯機碼或掃主機給你的 QR Code。</p></a>
+  <p class="mute">原始碼與檔案：<a href="https://github.com/AEverhub/USB-AGENT">github.com/AEverhub/USB-AGENT</a></p>
+</main>
+<script>
+(async () => {
+  const get = async (u) => { try { const r = await fetch(u, { cache: 'no-store' }); return r.ok ? await r.json() : null; } catch { return null; } };
+  const [n, d] = await Promise.all([get('latest.json'), get('dev/latest.json')]);
+  const mb = (x) => (x.size / 1048576).toFixed(1) + ' MB';
+  if (n) { document.getElementById('ver').textContent = n.version; const a = document.getElementById('dl'); a.href = n.zip; a.querySelector('h2').textContent += `・${mb(n)}`; }
+  else document.getElementById('ver').textContent = '';
+  if (d) { const a = document.getElementById('dldev'); a.href = 'dev/' + d.zip; a.querySelector('h2').textContent += `・${mb(d)}`; }
+})();
+</script>
+</body>
+</html>
