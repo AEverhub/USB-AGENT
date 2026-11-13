@@ -49,6 +49,10 @@ Write-Host "TF 卡：$root"
 if (-not $Base) { $uf = Join-Path $ac 'update-url.txt'; if (Test-Path $uf) { $Base = (Get-Content $uf -Raw).Trim() } }
 if ($Base -and -not $Base.EndsWith('/')) { $Base += '/' }
 
+# ---- 1.5 啟動流程只跑一次：已經有一個在啟動或執行 → 把那個視窗叫到前面就好（也不能在執行中更新程式） ----
+$once = Join-Path $ac 'tools\once.ps1'
+if (Test-Path $once) { & $once -Quiet; if ($LASTEXITCODE -eq 1) { Write-Host 'Agent Center 已經在執行了。'; Dongle-Close; exit 0 } }
+
 # ---- 2. 需要下載或更新嗎 ----
 $local = ''; $vf = Join-Path $ac 'app\VERSION'; if (Test-Path $vf) { $local = (Get-Content $vf -Raw).Trim() }
 $man = $null
