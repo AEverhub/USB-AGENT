@@ -32,7 +32,7 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
 <body>
 <main>
   <h1>T-Dongle-S3 一鍵燒錄</h1>
-  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine6.2・不用裝 Arduino</p>
+  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine6.3・不用裝 Arduino</p>
 
   <div class="card">
     <ol>
@@ -70,10 +70,10 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
       <li>Dongle 先自己看 TF 卡（FAT32、exFAT 都可以）。</li>
       <li><b>已經設定好</b>（卡上有 <code>AgentCenter\start.bat</code>）→ 直接開 <code>start.bat</code>，輸入 USB 密碼就能用。</li>
       <li><b>空的卡</b> → 自動從網路下載安裝，小螢幕顯示進度。</li>
-      <li><b>每次插上只開一次 AI</b>；開啟成功會變<b>綠燈</b>。之後 Dongle 就協助 AI 找 TF 卡以外（電腦 C:、D:…）的檔案、搬運到 TF 卡，搬運中會提醒「請勿拔除」。</li>
+      <li>電腦上的 AI 開好了，<b>按一下 Dongle 的按鈕＝開啟成功 → 綠燈</b>。沒開成功就<b>長按 3 秒</b>（看到「放開＝重新開啟」就放開）重新開啟。之後 Dongle 就協助 AI 找 TF 卡以外（電腦 C:、D:…）的檔案、搬運到 TF 卡，搬運中會提醒「請勿拔除」。</li>
       <li>不用管電腦現在是中文還是英文輸入法：Dongle 用 Alt＋數字鍵盤打字，注音輸入法不會攔截；打完會<b>一直等</b>電腦回應。</li>
-      <li>手機連線（開發版預設開）：手機和電腦連同一個 Wi-Fi，掃電腦啟動視窗上的 QR Code，手機上就能跟 AI 說話、下載電腦 C:、D: 和 TF 卡的檔案、上傳到 TF 卡。</li>
-      <li>按鈕：AI 開了之後短按＝看狀態（不會再開一次）；<b>長按 3 秒＝下次插上先檢查更新</b>；長按 8 秒＝開／關插上自動啟動。</li>
+      <li>手機連線（開發版預設開）：手機和電腦連同一個 Wi-Fi，掃 <b>Dongle 螢幕上的 QR Code</b>（電腦啟動視窗也有），手機上就能跟 AI 說話、下載電腦 C:、D: 和 TF 卡的檔案、上傳到 TF 卡。</li>
+      <li>按鈕：短按＝開好了（綠燈）／之後切換手機 QR Code；長按看螢幕提示、放開時決定：3 秒＝重新開啟、6 秒＝下次插上先檢查更新、10 秒＝開／關插上自動啟動。</li>
     </ol>
   </div>
 
