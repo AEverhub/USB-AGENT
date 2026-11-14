@@ -36,6 +36,8 @@ Dongle-Screen 'boot' '找 TF 卡…' '' ''
 $root = $null
 for ($i = 0; $i -lt 15 -and -not $root; $i++) {
   try { $v = Get-Disk | Where-Object { $_.FriendlyName -match 'T-Dongle' } | Get-Partition | Get-Volume | Where-Object { $_.DriveLetter } | Select-Object -First 1; if ($v) { $root = "$($v.DriveLetter):\" } } catch {}
+  # engine6.4：有些電腦一般使用者不能用 Get-Disk → 改用 WMI 找（型號「AGENT T-Dongle AI」）
+  if (-not $root) { try { $dd = Get-CimInstance Win32_DiskDrive | Where-Object { $_.Model -match 'T-Dongle' } | Select-Object -First 1; if ($dd) { $ld = $dd | Get-CimAssociatedInstance -ResultClassName Win32_DiskPartition | Get-CimAssociatedInstance -ResultClassName Win32_LogicalDisk | Select-Object -First 1; if ($ld) { $root = $ld.DeviceID + '\' } } } catch {} }
   if (-not $root) { Start-Sleep -Seconds 1 }
 }
 if (-not $root -and $here -match '\\AgentCenter\\tools$') { $root = [IO.Path]::GetPathRoot($here) }   # 從 TF 卡上執行的：就是這個磁碟（從暫存資料夾執行的不算）

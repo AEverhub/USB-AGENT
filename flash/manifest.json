@@ -1,6 +1,6 @@
 {
   "name": "Agent 中控中心 T-Dongle-S3 引導韌體（一般版）",
-  "version": "26.11.3-engine6.3",
+  "version": "26.11.3-engine6.4",
   "new_install_prompt_erase": true,
   "builds": [
     {
