@@ -32,7 +32,7 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
 <body>
 <main>
   <h1>T-Dongle-S3 一鍵燒錄</h1>
-  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine5.9・不用裝 Arduino</p>
+  <p class="sub">Agent 中控中心引導韌體 26.11.3-engine6.0・不用裝 Arduino</p>
 
   <div class="card">
     <ol>
@@ -55,7 +55,7 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
     </div>
     <div class="card ed dev">
       <h2>開發版<span class="tag">開發者</span></h2>
-      <p>多了：AI 可以看這台電腦的磁碟、找檔案，把電腦的檔案或資料夾<b>複製或搬運</b>到 TF 卡（用說的就好）。</p>
+      <p>多了：AI 可以看這台電腦的 C:、D: 磁碟、找檔案，把檔案<b>複製或搬運</b>到 TF 卡（用說的就好）；手機連線預設開，手機上也能下載電腦的檔案。</p>
       <esp-web-install-button manifest="dev/manifest.json">
         <button slot="activate">燒錄開發版</button>
         <span slot="unsupported">請改用電腦版 Chrome 或 Edge。</span>
@@ -70,7 +70,9 @@ code { font-family:ui-monospace,Consolas,monospace; font-size:.92em; }
       <li>Dongle 先自己看 TF 卡（FAT32、exFAT 都可以）。</li>
       <li><b>已經設定好</b>（卡上有 <code>AgentCenter\start.bat</code>）→ 直接開 <code>start.bat</code>，輸入 USB 密碼就能用。</li>
       <li><b>空的卡</b> → 自動從網路下載安裝，小螢幕顯示進度。</li>
-      <li>按鈕：短按＝再啟動一次；<b>連按兩下＝檢查更新再啟動</b>；長按 3 秒＝開／關插上自動啟動。</li>
+      <li><b>每次插上只開一次 AI</b>；之後 Dongle 就配合 AI 顯示搬運檔案的進度（搬運中會提醒「請勿拔除」）。</li>
+      <li>手機連線（開發版預設開）：手機和電腦連同一個 Wi-Fi，掃電腦啟動視窗上的 QR Code，手機上就能跟 AI 說話、下載電腦 C:、D: 和 TF 卡的檔案、上傳到 TF 卡。</li>
+      <li>按鈕：AI 開了之後短按＝看狀態（不會再開一次）；<b>長按 3 秒＝下次插上先檢查更新</b>；長按 8 秒＝開／關插上自動啟動。</li>
     </ol>
   </div>
 
